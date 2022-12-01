@@ -1,0 +1,13 @@
+name: "release-flag-action"
+author: "DeeepDev"
+description: This action is used to create powerful banners for your packages.
+inputs:
+  test-input:
+    description: "test input"
+    required: true
+outputs:
+  test-output:
+    description: "test output"
+runs:
+  using: "node16"
+  main: "dist/index.cjs"
