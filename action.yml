@@ -2,12 +2,12 @@ name: "release-flag-action"
 author: "DeeepDev"
 description: This action is used to create powerful banners for your packages.
 inputs:
-  test-input:
-    description: "test input"
+  repo_github_object:
+    description: "repository github object"
     required: true
 outputs:
-  test-output:
-    description: "test output"
+  photo_buf:
+    description: "release flag photo buffer"
 runs:
   using: "node16"
   main: "dist/index.cjs"

@@ -1,7 +1,6 @@
 {
   "name": "release-flag",
   "version": "0.0.0",
-  "type": "module",
   "author": {
     "name": "DeeepDev",
     "email": "amirabody.dev@gmail.com"
@@ -18,14 +17,17 @@
     "format:check": "prettier --check \"**/*.{js,ts,json}\"",
     "type-check": "tsc",
     "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\"",
-    "build": "tsc && rollup -c rollup.config.js"
+    "build": "tsc && rollup -c rollup.config.mjs"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
     "@rollup/plugin-typescript": "^10.0.1",
+    "@types/node": "^18.11.11",
+    "@types/sharp": "^0.31.0",
     "@typescript-eslint/parser": "^5.45.0",
     "eslint": "^8.28.0",
+    "fs-extra": "^11.1.0",
     "husky": "^8.0.2",
     "lint-staged": "^13.0.4",
     "prettier": "^2.8.0",
@@ -36,6 +38,8 @@
   "dependencies": {
     "@actions/core": "^1.10.0",
     "@actions/github": "^5.1.1",
+    "axios": "^1.2.2",
+    "handlebars": "^4.7.7",
     "sharp": "^0.31.2"
   }
 }
