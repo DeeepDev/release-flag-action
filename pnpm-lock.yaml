@@ -5,6 +5,7 @@ specifiers:
   '@actions/github': ^5.1.1
   '@commitlint/cli': ^17.3.0
   '@commitlint/config-conventional': ^17.3.0
+  '@octokit/types': ^8.1.0
   '@rollup/plugin-typescript': ^10.0.1
   '@types/node': ^18.11.11
   '@types/sharp': ^0.31.0
@@ -31,6 +32,7 @@ dependencies:
 devDependencies:
   '@commitlint/cli': 17.3.0
   '@commitlint/config-conventional': 17.3.0
+  '@octokit/types': 8.1.0
   '@rollup/plugin-typescript': 10.0.1_thigodkhmbmbgju2inwjpgoskq
   '@types/node': 18.11.11
   '@types/sharp': 0.31.0
@@ -382,6 +384,10 @@ packages:
     resolution: {integrity: sha512-VsXyi8peyRq9PqIz/tpqiL2w3w80OgVMwBHltTml3LmVvXiphgeqmY9mvBw9Wu7e0QWk/fqD37ux8yP5uVekyQ==}
     dev: false
 
+  /@octokit/openapi-types/14.0.0:
+    resolution: {integrity: sha512-HNWisMYlR8VCnNurDU6os2ikx0s0VyEjDYHNS/h4cgb8DeOxQ0n72HyinUtdDVxJhFy3FWLGl0DJhfEWk3P5Iw==}
+    dev: true
+
   /@octokit/plugin-paginate-rest/2.21.3_@octokit+core@3.6.0:
     resolution: {integrity: sha512-aCZTEf0y2h3OLbrgKkrfFdjRL6eSOo8komneVQJnYecAxIej7Bafor2xhuDJOIFau4pk0i/P28/XgtbyPF0ZHw==}
     peerDependencies:
@@ -427,6 +433,12 @@ packages:
     dependencies:
       '@octokit/openapi-types': 12.11.0
     dev: false
+
+  /@octokit/types/8.1.0:
+    resolution: {integrity: sha512-N4nLjzkiWBqVQqljTTsCrbvHGoWdWfcCeZjbHdggw7a9HbJMnxbK8A+UWdqwR4out30JarlSa3eqKyVK0n5aBg==}
+    dependencies:
+      '@octokit/openapi-types': 14.0.0
+    dev: true
 
   /@rollup/plugin-typescript/10.0.1_thigodkhmbmbgju2inwjpgoskq:
     resolution: {integrity: sha512-wBykxRLlX7EzL8BmUqMqk5zpx2onnmRMSw/l9M1sVfkJvdwfxogZQVNUM9gVMJbjRLDR5H6U0OMOrlDGmIV45A==}

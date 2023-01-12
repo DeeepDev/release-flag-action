@@ -1,9 +1,23 @@
 import * as core from "@actions/core";
+import { Endpoints } from "@octokit/types";
 import axios from "axios";
-import { readFile } from "fs/promises";
+import { readFile, writeFile } from "fs/promises";
 import { compile } from "handlebars";
 import path from "path";
 import sharp from "sharp";
+
+type TemplateContextType = {
+  repoName: string;
+  version: string;
+  prerelease: boolean;
+  contributorsCount: number;
+  startsCount: number;
+  openPRsCount: number;
+  openIssuesCount: number;
+};
+
+type ContributorsUrlResponseType = Endpoints["GET /repos/{owner}/{repo}/contributors"]["response"]["data"];
+type PullsUrlResponseType = Endpoints["GET /repos/{owner}/{repo}/pulls"]["response"]["data"];
 
 /**
  *
@@ -21,36 +35,43 @@ const renderHbsTemplate = <TContext extends object>(templatePath: string, ctx: T
  */
 const createPng = (xml: string): Promise<Buffer> => sharp(Buffer.from(xml, "utf-8"), { density: 150 }).toBuffer();
 
-async function test() {
+async function run() {
   const templatePath = path.join(__dirname, "views", "release-banner-template.hbs");
 
-  renderHbsTemplate(templatePath, {})
-    .then((xml) => createPng(xml))
-    .then(console.log);
-
+  // ! this object here does not have type, try to add type for
   const githubObject = JSON.parse(core.getInput("repo_github_object"));
 
-  const repo_name: string = githubObject["event"]["repository"]["name"];
-  const starts_count: string = githubObject["event"]["repository"]["stargazers_count"];
-  const open_issues_count = githubObject["event"]["repository"]["open_issues_count"];
+  const { name, contributors_url, pulls_url, stargazers_count, open_issues_count } = githubObject["event"][
+    "repository"
+  ] as Record<string, string>;
 
-  const contributors_url = githubObject["event"]["repository"]["contributors_url"];
-  const pulls_url = githubObject["event"]["repository"]["pulls_url"];
+  const { data: contributors } = await axios.get<ContributorsUrlResponseType>(contributors_url);
+  const contributorsCount = contributors.length;
 
-  const { data } = await axios.get(contributors_url);
+  const { data: pulls } = await axios.get<PullsUrlResponseType>(pulls_url.replace(/{.*}/, ""));
+  const openPRsCount = pulls.filter((pull) => pull.state === "open").length;
 
-  console.log(data);
+  const context: TemplateContextType = {
+    repoName: name,
+    version: core.getInput("version"),
+    prerelease: core.getInput("prerelease") === "true",
+    startsCount: +stargazers_count,
+    openIssuesCount: +open_issues_count,
+    contributorsCount,
+    openPRsCount,
+  };
 
-  const version = process.env.npm_package_version;
+  const outputPath = path.join(__dirname, "release.png");
+  core.setOutput("photo_path", outputPath);
 
-  console.log(core.getInput("repo_github_object"));
-  console.log("repo_name: ", repo_name);
-  console.log("version: ", version);
-  console.log("starts_count: ", starts_count);
-  console.log("open_issues_count: ", open_issues_count);
-  console.log("pulls_url: ", pulls_url);
+  renderHbsTemplate(templatePath, context)
+    .then(createPng)
+    .then((buf) => {
+      core.setOutput("photo_buf", buf);
+      writeFile(outputPath, buf);
+    });
+
+  console.log(context);
 }
 
-test();
-
-export {};
+run();

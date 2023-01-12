@@ -5,9 +5,18 @@ inputs:
   repo_github_object:
     description: "repository github object"
     required: true
+  version:
+    description: "released version"
+    required: true
+  prerelease:
+    description: "whether it is prerelease or not"
+    required: true
+    default: "false"
 outputs:
   photo_buf:
     description: "release flag photo buffer"
+  photo_path:
+    description: "release flag photo output path"
 runs:
   using: "node16"
   main: "dist/index.cjs"

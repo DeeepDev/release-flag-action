@@ -23,6 +23,16 @@ jobs:
           version: 7
       - run: pnpm install
       - run: pnpm build
-      - uses: ./
+      - id: create_release_flag
+        uses: ./
         with:
           repo_github_object: ${{ toJson(github) }}
+          version: 2.0.0
+          prerelease: "true"
+      - name: send-message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: "heyyyyyy"
+          photo: "${{ steps.create_release_flag.outputs.photo_path }}"
