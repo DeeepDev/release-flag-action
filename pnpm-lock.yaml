@@ -20,6 +20,7 @@ specifiers:
   prettier-plugin-organize-imports: ^3.2.1
   rollup: ^3.5.0
   sharp: ^0.31.2
+  tslib: ^2.4.1
   typescript: ^4.6.4
 
 dependencies:
@@ -33,7 +34,7 @@ devDependencies:
   '@commitlint/cli': 17.3.0
   '@commitlint/config-conventional': 17.3.0
   '@octokit/types': 8.1.0
-  '@rollup/plugin-typescript': 10.0.1_thigodkhmbmbgju2inwjpgoskq
+  '@rollup/plugin-typescript': 10.0.1_3qldpvhx2vwhgdtnpkk4u5tuly
   '@types/node': 18.11.11
   '@types/sharp': 0.31.0
   '@typescript-eslint/parser': 5.45.0_hsf322ms6xhhd4b5ne6lb74y4a
@@ -44,6 +45,7 @@ devDependencies:
   prettier: 2.8.0
   prettier-plugin-organize-imports: 3.2.1_brpckf4sz23pco3jyty2eys3iq
   rollup: 3.5.0
+  tslib: 2.4.1
   typescript: 4.9.3
 
 packages:
@@ -440,7 +442,7 @@ packages:
       '@octokit/openapi-types': 14.0.0
     dev: true
 
-  /@rollup/plugin-typescript/10.0.1_thigodkhmbmbgju2inwjpgoskq:
+  /@rollup/plugin-typescript/10.0.1_3qldpvhx2vwhgdtnpkk4u5tuly:
     resolution: {integrity: sha512-wBykxRLlX7EzL8BmUqMqk5zpx2onnmRMSw/l9M1sVfkJvdwfxogZQVNUM9gVMJbjRLDR5H6U0OMOrlDGmIV45A==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -456,6 +458,7 @@ packages:
       '@rollup/pluginutils': 5.0.2_rollup@3.5.0
       resolve: 1.22.1
       rollup: 3.5.0
+      tslib: 2.4.1
       typescript: 4.9.3
     dev: true
 

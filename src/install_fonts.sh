@@ -7,5 +7,5 @@ unzip_d () {
 }
 
 unzip_d assets/fonts/*.zip
-cp assets/fonts/* /usr/share/fonts/
+cp -r assets/fonts/* /usr/share/fonts/
 fc-cache -fv

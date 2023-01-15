@@ -76,7 +76,7 @@ async function run() {
 }
 
 // Install all fonts
-exec("bash install_fonts.sh", (error, stdout, stderr) => {
+exec("bash install_fonts.sh", { cwd: __dirname }, (error, stdout, stderr) => {
   if (error) {
     console.error(`fonts install script error: ${error}`);
     return;

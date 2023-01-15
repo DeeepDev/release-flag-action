@@ -11,12 +11,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Install Inter Google Font
-        run: |
-          wget -O Inter.zip https://fonts.google.com/download?family=Inter
-          unzip -d inter/ Inter.zip
-          mv inter /usr/share/fonts/
-          fc-cache -fv
       - name: Checkout
         uses: actions/checkout@v3
       - name: Install node
