@@ -52,7 +52,7 @@ async function run() {
   const openPRsCount = pulls.filter((pull) => pull.state === "open").length;
 
   const context: TemplateContextType = {
-    repoName: name,
+    repoName: name.toUpperCase().replace(/-/g, " "),
     version: core.getInput("version"),
     prerelease: core.getInput("prerelease") === "true",
     startsCount: +stargazers_count,
