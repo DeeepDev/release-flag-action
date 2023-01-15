@@ -1,43 +1,13 @@
 import * as core from "@actions/core";
-import { Endpoints } from "@octokit/types";
 import axios from "axios";
 import { exec } from "child_process";
-import { readFile, writeFile } from "fs/promises";
-import { compile } from "handlebars";
+import { writeFile } from "fs/promises";
 import path from "path";
-import sharp from "sharp";
-
-type TemplateContextType = {
-  repoName: string;
-  version: string;
-  prerelease: boolean;
-  contributorsCount: number;
-  startsCount: number;
-  openPRsCount: number;
-  openIssuesCount: number;
-};
-
-type ContributorsUrlResponseType = Endpoints["GET /repos/{owner}/{repo}/contributors"]["response"]["data"];
-type PullsUrlResponseType = Endpoints["GET /repos/{owner}/{repo}/pulls"]["response"]["data"];
-
-/**
- *
- * @param templatePath
- * @param ctx
- * @returns
- */
-const renderHbsTemplate = <TContext extends object>(templatePath: string, ctx: TContext): Promise<string> =>
-  readFile(templatePath, { encoding: "utf-8" }).then((buf) => compile<TContext>(buf)(ctx));
-
-/**
- *
- * @param xml
- * @returns Promise that resolves to png buffer
- */
-const createPng = (xml: string): Promise<Buffer> => sharp(Buffer.from(xml, "utf-8"), { density: 150 }).toBuffer();
+import { ContributorsUrlResponseType, PullsUrlResponseType, TemplateContextType } from "./types";
+import { createJpg, renderHbsTemplate } from "./utils";
 
 async function run() {
-  const templatePath = path.join(__dirname, "views", "release-banner-template.hbs");
+  const templatePath = path.join(__dirname, "views", "release-flag-template.hbs");
 
   // ! this object here does not have type, try to add type for
   const githubObject = JSON.parse(core.getInput("repo_github_object"));
@@ -62,17 +32,15 @@ async function run() {
     openPRsCount,
   };
 
-  const outputPath = path.join(__dirname, "release.png");
+  const outputPath = path.join(__dirname, "release.jpg");
   core.setOutput("photo_path", outputPath);
 
   renderHbsTemplate(templatePath, context)
-    .then(createPng)
+    .then(createJpg)
     .then((buf) => {
       core.setOutput("photo_buf", buf);
       writeFile(outputPath, buf);
     });
-
-  console.log(context);
 }
 
 // Install all fonts
