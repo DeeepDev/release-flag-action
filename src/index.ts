@@ -1,6 +1,7 @@
 import * as core from "@actions/core";
 import { Endpoints } from "@octokit/types";
 import axios from "axios";
+import { exec } from "child_process";
 import { readFile, writeFile } from "fs/promises";
 import { compile } from "handlebars";
 import path from "path";
@@ -74,4 +75,15 @@ async function run() {
   console.log(context);
 }
 
-run();
+// Install all fonts
+exec("bash install_fonts.sh", (error, stdout, stderr) => {
+  if (error) {
+    console.error(`fonts install script error: ${error}`);
+    return;
+  }
+  console.log(`stdout: ${stdout}`);
+  console.error(`stderr: ${stderr}`);
+
+  // run the code and create release flag
+  run();
+});

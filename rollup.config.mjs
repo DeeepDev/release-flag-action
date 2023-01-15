@@ -13,7 +13,11 @@ export default [
       {
         name: "include-static-files",
         generateBundle: async () => {
-          await Promise.all([fse.copy("src/views", "dist/views"), fse.copy("src/assets", "dist/assets")]);
+          await Promise.all([
+            fse.copy("src/views", "dist/views"),
+            fse.copy("src/assets", "dist/assets"),
+            fse.copyFile("src/install_fonts.sh", "dist/install_fonts.sh"),
+          ]);
         },
       },
     ],
