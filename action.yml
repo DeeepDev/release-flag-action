@@ -36,4 +36,5 @@ outputs:
     description: "release flag photo output path"
 runs:
   using: "node16"
+  pre: 'pnpm build'
   main: "dist/index.cjs"
