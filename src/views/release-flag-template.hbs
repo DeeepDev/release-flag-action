@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg
+  width="500"
+  height="350"
+  viewBox="0 0 500 350"
+  xmlns="http://www.w3.org/2000/svg"
+  version="1.1"
+  font-family="Inter"
+>
+  <rect x="0" y="0" width="500" height="350" fill="#EA6B13"></rect>
+  <g transform="translate(250, 0)" text-anchor="middle">
+    <text x="0" y="76" font-size="36" font-weight="800" fill="white" fill-opacity="0.3">{{ repoName }}</text>
+    <g transform="translate(0, 200)">
+      <text x="0" y="0" font-size="88" font-weight="900" fill="black" fill-opacity="0.25">v {{ version }}</text>
+      <text x="0" y="0" font-size="96" font-weight="900" fill="white">v {{ version }}</text>
+      {{#if prerelease}}
+      <text
+        x="0"
+        y="30"
+        font-size="10"
+        font-weight="600"
+        fill="white"
+        fill-opacity="0.8"
+        text-decoration="underline"
+      >PRERELEASE</text>
+      {{/if}}
+    </g>
+    <g transform="translate(0, 277)">
+      <g transform="translate(-175.5, 0)">
+        <rect x="2" y="-2" width="86" height="28" rx="5" fill="black" fill-opacity="0.1"></rect>
+        <rect x="0" y="0" width="86" height="28" rx="5" fill="white" fill-opacity="0.8"></rect>
+        <g transform="translate(43, 0)" font-size="8" font-weight="700" fill="#EA6B13">
+          <text x="0" y="11">Contributors Count</text>
+          <text x="0" y="23">{{ contributorsCount }}</text>
+        </g>
+      </g>
+      <g transform="translate(-74.5, 0)">
+        <rect x="1" y="-2" width="60" height="28" rx="5" fill="black" fill-opacity="0.1"></rect>
+        <rect x="0" y="0" width="60" height="28" rx="5" fill="white" fill-opacity="0.8"></rect>
+        <g transform="translate(30, 0)" font-size="8" font-weight="700" fill="#EA6B13">
+          <text x="0" y="11">Stars Count</text>
+          <text x="0" y="23">{{ startsCount }}</text>
+        </g>
+      </g>
+      <g transform="translate(0.5, 0)">
+        <rect x="-1" y="-2" width="74" height="28" rx="5" fill="black" fill-opacity="0.1"></rect>
+        <rect x="0" y="0" width="74" height="28" rx="5" fill="white" fill-opacity="0.8"></rect>
+        <g transform="translate(37, 0)" font-size="8" font-weight="700" fill="#EA6B13">
+          <text x="0" y="11">Open PRs Count</text>
+          <text x="0" y="23">{{ openPRsCount }}</text>
+        </g>
+      </g>
+      <g transform="translate(89.5, 0)">
+        <rect x="-2" y="-2" width="85" height="28" rx="5" fill="black" fill-opacity="0.1"></rect>
+        <rect x="0" y="0" width="85" height="28" rx="5" fill="white" fill-opacity="0.8"></rect>
+        <g transform="translate(42.5, 0)" font-size="8" font-weight="700" fill="#EA6B13">
+          <text x="0" y="11">Open Issues Count</text>
+          <text x="0" y="23">{{ openIssuesCount }}</text>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
