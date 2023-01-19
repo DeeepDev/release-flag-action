@@ -8,7 +8,7 @@ on:
       - "main"
 
 jobs:
-  test:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,7 +25,10 @@ jobs:
       - run: pnpm lint
       - run: pnpm format:check
       - run: pnpm type-check
-      - run: pnpm build
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
       - id: create_release_flag
         uses: ./
         with:
