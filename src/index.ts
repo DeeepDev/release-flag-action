@@ -1,8 +1,9 @@
 import * as core from "@actions/core";
-import axios from "axios";
 import { exec } from "child_process";
 import { writeFile } from "fs/promises";
 import path from "path";
+import { axiosClient } from "./axios";
+import { sendTelegramMessage } from "./telegram";
 import { ContributorsUrlResponseType, PullsUrlResponseType, TemplateContextType } from "./types";
 import { createJpg, renderHbsTemplate } from "./utils";
 
@@ -18,10 +19,10 @@ async function run() {
     "repository"
   ] as Record<string, string>;
 
-  const { data: contributors } = await axios.get<ContributorsUrlResponseType>(contributors_url);
+  const { data: contributors } = await axiosClient.get<ContributorsUrlResponseType>(contributors_url);
   const contributorsCount = contributors.length;
 
-  const { data: pulls } = await axios.get<PullsUrlResponseType>(pulls_url.replace(/{.*}/, ""));
+  const { data: pulls } = await axiosClient.get<PullsUrlResponseType>(pulls_url.replace(/{.*}/, ""));
   const openPRsCount = pulls.filter((pull) => pull.state === "open").length;
 
   const context: TemplateContextType = {
@@ -40,6 +41,7 @@ async function run() {
   renderHbsTemplate(templatePath, context)
     .then((xml) => createJpg(xml, flagQuality))
     .then((buf) => {
+      sendTelegramMessage(buf);
       core.setOutput("output_flag_buf", buf);
       writeFile(outputFlagPath, buf);
     });

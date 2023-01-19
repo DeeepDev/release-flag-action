@@ -16,6 +16,19 @@ inputs:
     description: "DPI of the flag image produced"
     required: false
     default: "150"
+  telegram_to:
+    description: "chat_id to send the message to"
+    required: true
+  telegram_token:
+    description: "telegram bot token"
+    required: true
+  telegram_message:
+    description: "telegram message"
+    required: true
+  telegram_message_format:
+    description: "telegram message format: MarkdownV2 or HTML or Markdown"
+    required: false
+    default: "Markdown"
 outputs:
   output_flag_buf:
     description: "release flag photo buffer"
