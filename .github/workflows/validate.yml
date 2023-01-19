@@ -1,5 +1,5 @@
 # Validate the code and the action itself
-name: validate
+name: test
 
 on:
   pull_request:
@@ -34,11 +34,4 @@ jobs:
           prerelease: "false"
           telegram_to: ${{ secrets.TELEGRAM_TO }}
           telegram_token: ${{ secrets.TELEGRAM_TOKEN }}
-          telegram_message: "This is the release flag telegram message body"
-      # - name: send-message
-      #   uses: appleboy/telegram-action@master
-      #   with:
-      #     to: ${{ secrets.TELEGRAM_TO }}
-      #     token: ${{ secrets.TELEGRAM_TOKEN }}
-      #     message: "message"
-      #     photo: "${{ steps.create_release_flag.outputs.output_flag_path }}"
+          telegram_message: "This is the *release flag* telegram message body"
