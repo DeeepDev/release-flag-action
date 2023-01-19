@@ -12,6 +12,8 @@ async function run() {
   // ! this object here does not have type, try to add type for
   const githubObject = JSON.parse(core.getInput("repo_github_object"));
 
+  const flagQuality = +core.getInput("flag-quality");
+
   const { name, contributors_url, pulls_url, stargazers_count, open_issues_count } = githubObject["event"][
     "repository"
   ] as Record<string, string>;
@@ -32,14 +34,14 @@ async function run() {
     openPRsCount,
   };
 
-  const outputPath = path.join(__dirname, "release.jpg");
-  core.setOutput("photo_path", outputPath);
+  const outputFlagPath = path.join(__dirname, "release.jpg");
+  core.setOutput("photo_path", outputFlagPath);
 
   renderHbsTemplate(templatePath, context)
-    .then(createJpg)
+    .then((xml) => createJpg(xml, flagQuality))
     .then((buf) => {
       core.setOutput("photo_buf", buf);
-      writeFile(outputPath, buf);
+      writeFile(outputFlagPath, buf);
     });
 }
 

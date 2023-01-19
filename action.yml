@@ -10,8 +10,12 @@ inputs:
     required: true
   prerelease:
     description: "whether it is prerelease or not"
-    required: true
+    required: false
     default: "false"
+  flag-quality:
+    description: "DPI of the flag image produced"
+    required: false
+    default: "150"
 outputs:
   photo_buf:
     description: "release flag photo buffer"

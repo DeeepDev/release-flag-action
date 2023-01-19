@@ -1,11 +1,11 @@
 import { readFile } from "fs/promises";
 import { compile } from "handlebars";
-import sharp from "sharp";
+import sharp, { SharpOptions } from "sharp";
 
 /**
  *
- * @param templatePath
- * @param ctx
+ * @param templatePath - path to the template file
+ * @param ctx - context object to use for rendering the template file
  * @returns
  */
 export const renderHbsTemplate = <TContext extends object>(templatePath: string, ctx: TContext): Promise<string> =>
@@ -13,8 +13,9 @@ export const renderHbsTemplate = <TContext extends object>(templatePath: string,
 
 /**
  *
- * @param xml
+ * @param xml - xml string of the file to be conterted to JPG
+ * @param density - DPI of the image
  * @returns Promise that resolves to jpg buffer
  */
-export const createJpg = (xml: string): Promise<Buffer> =>
-  sharp(Buffer.from(xml, "utf-8"), { density: 150 }).toBuffer();
+export const createJpg = (xml: string, density: SharpOptions["density"] = 150): Promise<Buffer> =>
+  sharp(Buffer.from(xml, "utf-8"), { density }).toBuffer();
