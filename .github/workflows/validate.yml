@@ -32,6 +32,9 @@ jobs:
           repo_github_object: ${{ toJson(github) }}
           version: 2.3.4
           prerelease: "false"
+          telegram_to: ${{ secrets.TELEGRAM_TO }}
+          telegram_token: ${{ secrets.TELEGRAM_TOKEN }}
+          telegram_message: "This is the release flag telegram message body"
       # - name: send-message
       #   uses: appleboy/telegram-action@master
       #   with:
