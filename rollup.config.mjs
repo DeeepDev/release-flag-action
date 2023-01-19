@@ -1,3 +1,4 @@
+import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
 import fse from "fs-extra";
 
@@ -7,9 +8,11 @@ export default [
     output: {
       file: "dist/index.cjs",
       format: "cjs",
+      compact: true,
     },
     plugins: [
       typescript(),
+      terser(),
       {
         name: "include-static-files",
         generateBundle: async () => {
