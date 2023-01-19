@@ -25,12 +25,12 @@ jobs:
       - run: pnpm lint
       - run: pnpm format:check
       - run: pnpm type-check
+      - run: pnpm build
       - id: create_release_flag
         uses: ./
         with:
           repo_github_object: ${{ toJson(github) }}
           version: 2.3.4
-          prerelease: "false"
           telegram_to: ${{ secrets.TELEGRAM_TO }}
           telegram_token: ${{ secrets.TELEGRAM_TOKEN }}
           telegram_message: "This is the *release flag* telegram message body"
