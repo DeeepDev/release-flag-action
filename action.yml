@@ -17,9 +17,9 @@ inputs:
     required: false
     default: "150"
 outputs:
-  photo_buf:
+  output_flag_buf:
     description: "release flag photo buffer"
-  photo_path:
+  output_flag_path:
     description: "release flag photo output path"
 runs:
   using: "node16"

@@ -27,12 +27,12 @@ jobs:
         uses: ./
         with:
           repo_github_object: ${{ toJson(github) }}
-          version: 2.0.0
-          prerelease: "true"
+          version: 2.3.4
+          prerelease: "false"
       - name: send-message
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: "heyyyyyy"
-          photo: "${{ steps.create_release_flag.outputs.photo_path }}"
+          photo: "${{ steps.create_release_flag.outputs.output_flag_path }}"

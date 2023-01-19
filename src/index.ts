@@ -35,12 +35,12 @@ async function run() {
   };
 
   const outputFlagPath = path.join(__dirname, "release.jpg");
-  core.setOutput("photo_path", outputFlagPath);
+  core.setOutput("output_flag_path", outputFlagPath);
 
   renderHbsTemplate(templatePath, context)
     .then((xml) => createJpg(xml, flagQuality))
     .then((buf) => {
-      core.setOutput("photo_buf", buf);
+      core.setOutput("output_flag_buf", buf);
       writeFile(outputFlagPath, buf);
     });
 }
