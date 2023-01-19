@@ -1,6 +1,6 @@
 import * as core from "@actions/core";
-import axios from "axios";
 import FormData from "form-data";
+import { axiosClient } from "./axios";
 
 export async function sendTelegramMessage(flagBuf: Buffer): Promise<any> {
   const chatId = core.getInput("telegram_to");
@@ -17,7 +17,7 @@ export async function sendTelegramMessage(flagBuf: Buffer): Promise<any> {
   form.append("caption", message);
   form.append("parse_mode", messageFormat);
 
-  return axios.post(telegramUrl, form).then((res) => {
+  return axiosClient.post(telegramUrl, form).then((res) => {
     console.log(`Telegram message response status code: ${res.status}`);
     console.log(res.data.ok ? "Telegram message sent successfully" : "Sending telegram message failed!");
   });
