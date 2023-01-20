@@ -16,7 +16,7 @@
     "format": "prettier --write \"**/*.{js,ts,json}\"",
     "format:check": "prettier --check \"**/*.{js,ts,json}\"",
     "type-check": "tsc",
-    "lint": "eslint --max-warnings 0 \"**/*.{js,ts}\"",
+    "lint": "eslint --ignore-pattern \"dist\" --max-warnings 0 \"**/*.{js,ts}\"",
     "build": "tsc && rollup -c rollup.config.mjs"
   },
   "devDependencies": {
