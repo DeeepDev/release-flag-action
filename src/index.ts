@@ -19,11 +19,21 @@ async function run() {
     "repository"
   ] as Record<string, string>;
 
-  const { data: contributors } = await axiosClient.get<ContributorsUrlResponseType>(contributors_url);
-  const contributorsCount = contributors.length;
+  let contributorsCount, openPRsCount;
 
-  const { data: pulls } = await axiosClient.get<PullsUrlResponseType>(pulls_url.replace(/{.*}/, ""));
-  const openPRsCount = pulls.filter((pull) => pull.state === "open").length;
+  try {
+    const { data: contributors } = await axiosClient.get<ContributorsUrlResponseType>(contributors_url);
+    contributorsCount = contributors.length;
+  } catch (err) {
+    console.log(err);
+  }
+
+  try {
+    const { data: pulls } = await axiosClient.get<PullsUrlResponseType>(pulls_url.replace(/{.*}/, ""));
+    openPRsCount = pulls?.filter((pull) => pull.state === "open").length;
+  } catch (err) {
+    console.log(err);
+  }
 
   const context: TemplateContextType = {
     repoName: name.toUpperCase().replace(/-/g, " "),
@@ -31,8 +41,8 @@ async function run() {
     prerelease: core.getInput("prerelease") === "true",
     startsCount: +stargazers_count,
     openIssuesCount: +open_issues_count,
-    contributorsCount,
-    openPRsCount,
+    contributorsCount: contributorsCount ?? "???",
+    openPRsCount: openPRsCount ?? "???",
   };
 
   const outputFlagPath = path.join(__dirname, "release.jpg");
