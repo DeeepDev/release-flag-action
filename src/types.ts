@@ -4,10 +4,10 @@ export type TemplateContextType = {
   repoName: string;
   version: string;
   prerelease: boolean;
-  contributorsCount: number;
-  startsCount: number;
-  openPRsCount: number;
-  openIssuesCount: number;
+  contributorsCount: number | string;
+  startsCount: number | string;
+  openPRsCount: number | string;
+  openIssuesCount: number | string;
 };
 
 export type ContributorsUrlResponseType = Endpoints["GET /repos/{owner}/{repo}/contributors"]["response"]["data"];

@@ -8,7 +8,7 @@ import { ContributorsUrlResponseType, PullsUrlResponseType, TemplateContextType 
 import { createJpg, renderHbsTemplate } from "./utils";
 
 async function run() {
-  const templatePath = path.join(__dirname, "views", "release-flag-template.hbs");
+  const templatePath = path.join(__dirname, "..", "static", "views", "release-flag-template.hbs");
 
   // ! this object here does not have type, try to add type for
   const githubObject = JSON.parse(core.getInput("repo_github_object"));
@@ -19,11 +19,21 @@ async function run() {
     "repository"
   ] as Record<string, string>;
 
-  const { data: contributors } = await axiosClient.get<ContributorsUrlResponseType>(contributors_url);
-  const contributorsCount = contributors.length;
+  let contributorsCount, openPRsCount;
 
-  const { data: pulls } = await axiosClient.get<PullsUrlResponseType>(pulls_url.replace(/{.*}/, ""));
-  const openPRsCount = pulls.filter((pull) => pull.state === "open").length;
+  try {
+    const { data: contributors } = await axiosClient.get<ContributorsUrlResponseType>(contributors_url);
+    contributorsCount = contributors.length;
+  } catch (err) {
+    console.log(err);
+  }
+
+  try {
+    const { data: pulls } = await axiosClient.get<PullsUrlResponseType>(pulls_url.replace(/{.*}/, ""));
+    openPRsCount = pulls?.filter((pull) => pull.state === "open").length;
+  } catch (err) {
+    console.log(err);
+  }
 
   const context: TemplateContextType = {
     repoName: name.toUpperCase().replace(/-/g, " "),
@@ -31,8 +41,8 @@ async function run() {
     prerelease: core.getInput("prerelease") === "true",
     startsCount: +stargazers_count,
     openIssuesCount: +open_issues_count,
-    contributorsCount,
-    openPRsCount,
+    contributorsCount: contributorsCount ?? "???",
+    openPRsCount: openPRsCount ?? "???",
   };
 
   const outputFlagPath = path.join(__dirname, "release.jpg");
@@ -48,13 +58,13 @@ async function run() {
 }
 
 // Install all fonts
-exec("bash install_fonts.sh", { cwd: __dirname }, (error, stdout, stderr) => {
+exec("bash install_fonts.sh", { cwd: "static" }, (error, stdout, stderr) => {
   if (error) {
     console.error(`fonts install script error: ${error}`);
     return;
   }
-  console.log(`stdout: ${stdout}`);
-  console.error(`stderr: ${stderr}`);
+  stdout && console.log(`stdout: ${stdout}`);
+  stderr && console.error(`stderr: ${stderr}`);
 
   // run the code and create release flag
   run();
