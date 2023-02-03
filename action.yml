@@ -12,7 +12,7 @@ inputs:
     description: "whether it is prerelease or not"
     required: false
     default: "false"
-  flag-quality:
+  flag_quality:
     description: "DPI of the flag image produced"
     required: false
     default: "150"
