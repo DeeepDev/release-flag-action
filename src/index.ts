@@ -13,7 +13,7 @@ async function run() {
   // ! this object here does not have type, try to add type for
   const githubObject = JSON.parse(core.getInput("repo_github_object"));
 
-  const flagQuality = +core.getInput("flag-quality");
+  const flagQuality = +core.getInput("flag_quality");
 
   const { name, contributors_url, pulls_url, stargazers_count, open_issues_count } = githubObject["event"][
     "repository"
