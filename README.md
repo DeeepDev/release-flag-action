@@ -7,8 +7,9 @@ Release Flag Action is a github action that creates a release flag using some in
 First of all, you should create a telegram bot using the [BotFather](https://telegram.me/BotFather) and take the bot token and also the `chat_id` of the group you want to send the release flag message to.
 
 <details>
-  <summary>How to get <code>chat_id</code> of a specific chat?</summary>
-  First, you need to send a message with the content <mark>@[username_bot] /start</mark> to the chat you want to get the <code>chat_id</code> of.
+  <summary><h1>How to get <code>chat_id</code> of a specific chat?</h1></summary>
+  
+  First, you need to send a message with the content <code>@[username_bot] /start</code> to the chat you want to get the <code>chat_id</code> of.
   Then, send a request to the url below, hence you can get the parameter from the response.
 
   ```http
